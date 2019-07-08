@@ -14,9 +14,31 @@
 
 RESTful interface for Elastic Build Results.
 
+## Usage
+
+To view the API documentation, start the server and go to to `<url>/api/docs`.
+
+### Dev Mode
+
+To start in dev mode, run ` python ebr_board/ebr_board.py`
+
+### Production Mode
+
+Can be invoked with `ebr_board:create_app(config_filename='/etc/ebr-board/config.yaml', vault_config_filename='/etc/ebr-board/vault.yaml', vault_creds_filename='/etc/ebr-board/vault.yaml', load_certs=True, reverse_proxy=True)`, for example from Gunicorn. You should configure it behind a reverse proxy - for more details see
+any guide on configuring Flask servers for deployment. A Dockerfile pre-configuring Gunicorn is available in the root of the repository.
+
 ## Features
 
-* TODO
+* Provides abstraction to fetch:
+    * a list of builds from a given job
+    * tests from a given job
+    * aggregations of tests failures
+
+### Todo:
+
+* Improve test coverage
+* Fill in coverage of resources
+* Expand aggregation/search functionality
 
 ## Credits
 

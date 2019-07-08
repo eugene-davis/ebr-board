@@ -14,14 +14,21 @@ RUN pip install -r /requirements_dev.txt
 FROM $PYTHON_BASE AS deploy_builder
 RUN pip install --upgrade virtualenv==16.6.0 && python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install gunicorn
 COPY . /code
 WORKDIR /code
 RUN python setup.py sdist \
-  && pip install dist/*
+  && pip install dist/* && pip install -r requirements.txt
 
 
-FROM $PYTHON_BASE
+FROM $PYTHON_BASE 
 COPY --from=deploy_builder /opt/venv /opt/venv
 
 ENV PATH="/opt/venv/bin:$PATH"
-ENTRYPOINT [""]
+
+ENTRYPOINT [ "/opt/venv/bin/gunicorn", \
+    "--chdir", "/opt/venv/lib/python3.6/site-packages/ebr_board/",\
+    "-w", "4",\
+    "-b", "0.0.0.0:8080",\
+    "ebr_board:create_app(config_filename='/etc/ebr-board/config.yaml', vault_config_filename='/etc/ebr-board/vault.yaml', vault_creds_filename='/etc/ebr-board/vault.yaml', load_certs=True, reverse_proxy=True)" \
+    ]
