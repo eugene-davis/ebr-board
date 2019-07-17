@@ -19,7 +19,8 @@ with open("README.md") as readme_file:
 with open("CHANGELOG.md") as changelog_file:
     changelog = changelog_file.read()
 
-requirements = []
+with open("requirements.txt") as req_file:
+    requirements = req_file.read().splitlines()
 
 setup_requirements = ["pytest-runner"]
 
