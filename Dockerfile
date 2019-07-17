@@ -17,8 +17,8 @@ ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install gunicorn
 COPY . /code
 WORKDIR /code
-RUN python setup.py sdist \
-  && pip install dist/* && pip install -r requirements.txt
+RUN python setup.py sdist\
+  && pip install dist/*
 
 
 FROM $PYTHON_BASE 
