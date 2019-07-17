@@ -15,9 +15,7 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
     Config object which can connect to a Hashicorp Vault instance
     """
 
-    def __init__(
-        self, config_filename, vault_config_filename, vault_creds_filename, load_certs=False
-    ):
+    def __init__(self, config_filename, vault_config_filename, vault_creds_filename, load_certs=False):
         """
         Args:
             config_filename {str} -- [description] (default: {'config.yaml'})
