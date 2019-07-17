@@ -18,6 +18,31 @@ RESTful interface for Elastic Build Results.
 
 To view the API documentation, start the server and go to to `<url>/api/docs`.
 
+## Configuration
+
+ebr-board uses [Vault-Anyconfig](https://pypi.org/project/vault-anyconfig/) to read in its configuration, allowing it to access a Hashicorp Vault
+instance for loading secrets. For more details refer to its documentation.
+
+In order to deploy a simple ebr-board instance, you will need two files: `config.yaml` and `vault.yaml`. Leave `vault.yaml` empty, as we will not use
+secret loading from Vault-Anyconfig in this instance.
+
+`config.yaml` should be formatted as follows:
+
+```yaml
+elastic:
+  host: <elastic_url>
+  port: 9200
+  timeout: 20
+  use_ssl: true
+  verify_certs: true
+  ca_certs: /etc/ebr-board/elastic.crt
+  index: testspipeline*
+  user: <elastic_user>
+  pwd: <elastic_password>
+
+```
+
+
 ### Dev Mode
 
 To start in dev mode, run ` python ebr_board/ebr_board.py`
