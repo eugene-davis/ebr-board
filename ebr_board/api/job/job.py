@@ -23,16 +23,12 @@ class Job(Resource):
     """
 
     @ns.param(
-        "start",
-        "RFC 3986 or ISO 8601 formatted date-time for start of time range to display over.",
+        "start", "RFC 3986 or ISO 8601 formatted date-time for start of time range to display over."
     )
     @ns.param(
-        "end",
-        "RFC 3986 or ISO 8601 formatted date-time for end of time range to display over.",
+        "end", "RFC 3986 or ISO 8601 formatted date-time for end of time range to display over."
     )
-    @ns.param(
-        "num_results", "Number of results to return (for pagination). Defaults to 25."
-    )
+    @ns.param("num_results", "Number of results to return (for pagination). Defaults to 25.")
     @ns.param("start_result", "First result to return (for pagination). Defaults to 0.")
     @ns.response(404, "Job not found")
     @ns.marshal_with(job_model)
@@ -56,9 +52,7 @@ class Job(Resource):
         args = parser.parse_args()
 
         match_job_name = Q("term", br_job_name__raw=job_name)
-        range_time = Q(
-            "range", **{"br_build_date_time": {"gte": args.start, "lt": args.end}}
-        )
+        range_time = Q("range", **{"br_build_date_time": {"gte": args.start, "lt": args.end}})
 
         combined_filters = match_job_name & range_time
 

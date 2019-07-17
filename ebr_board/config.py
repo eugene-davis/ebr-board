@@ -15,7 +15,9 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
     Config object which can connect to a Hashicorp Vault instance
     """
 
-    def __init__(self, config_filename, vault_config_filename, vault_creds_filename, load_certs=False):
+    def __init__(
+        self, config_filename, vault_config_filename, vault_creds_filename, load_certs=False
+    ):
         """
         Args:
             config_filename {str} -- [description] (default: {'config.yaml'})
@@ -25,8 +27,7 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
         """
         config_client = VaultAnyConfig(vault_config_filename)
         config_client.auth_from_file(vault_creds_filename)
-        config = config_client.load(
-            config_filename, process_secret_files=load_certs)
+        config = config_client.load(config_filename, process_secret_files=load_certs)
 
         # Elastic Search
         elastic_config = config["elastic"]

@@ -34,9 +34,7 @@ def create_app(  # pylint: disable=too-many-arguments
         load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
     """
 
-    config = VaultConfig(
-        config_filename, vault_config_filename, vault_creds_filename, load_certs
-    )
+    config = VaultConfig(config_filename, vault_config_filename, vault_creds_filename, load_certs)
 
     app = Flask(__name__)  # pylint: disable=invalid-name
     app.config.from_object(config)
