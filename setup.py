@@ -19,11 +19,12 @@ with open("README.md") as readme_file:
 with open("CHANGELOG.md") as changelog_file:
     changelog = changelog_file.read()
 
-requirements = []
+with open("requirements.txt") as req_file:
+    requirements = req_file.read().splitlines()
 
-setup_requirements = ["pytest-runner",]
+setup_requirements = ["pytest-runner"]
 
-test_requirements = ["pytest", "pytest-cov", "coverage",]
+test_requirements = ["pytest", "pytest-cov", "coverage"]
 
 setup(
     author=ebr_board.__author__,
@@ -39,11 +40,6 @@ setup(
         "Programming Language :: Python :: 3.7",
     ],
     description="RESTful interface for Elastic Build Results.",
-    entry_points={
-        "console_scripts": [
-            "ebr-board=ebr_board.cli:main",
-        ],
-    },
     install_requires=requirements,
     license="Apache Software License 2.0",
     long_description=readme + "\n\n" + changelog,
