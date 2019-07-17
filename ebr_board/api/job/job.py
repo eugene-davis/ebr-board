@@ -22,17 +22,9 @@ class Job(Resource):
     Defines the job resource
     """
 
-    @ns.param(
-        "start",
-        "RFC 3986 or ISO 8601 formatted date-time for start of time range to display over.",
-    )
-    @ns.param(
-        "end",
-        "RFC 3986 or ISO 8601 formatted date-time for end of time range to display over.",
-    )
-    @ns.param(
-        "num_results", "Number of results to return (for pagination). Defaults to 25."
-    )
+    @ns.param("start", "RFC 3986 or ISO 8601 formatted date-time for start of time range to display over.")
+    @ns.param("end", "RFC 3986 or ISO 8601 formatted date-time for end of time range to display over.")
+    @ns.param("num_results", "Number of results to return (for pagination). Defaults to 25.")
     @ns.param("start_result", "First result to return (for pagination). Defaults to 0.")
     @ns.response(404, "Job not found")
     @ns.marshal_with(job_model)
@@ -47,18 +39,14 @@ class Job(Resource):
             default=pendulum.parse("1970-01-01T00:00:00+00:00").in_timezone("UTC"),
         )
         parser.add_argument(
-            "end",
-            type=lambda s: pendulum.parse(s).in_timezone("UTC"),
-            default=pendulum.now().in_timezone("UTC"),
+            "end", type=lambda s: pendulum.parse(s).in_timezone("UTC"), default=pendulum.now().in_timezone("UTC")
         )
         parser.add_argument("num_results", type=int, default=25)
         parser.add_argument("start_result", type=int, default=0)
         args = parser.parse_args()
 
         match_job_name = Q("term", br_job_name__raw=job_name)
-        range_time = Q(
-            "range", **{"br_build_date_time": {"gte": args.start, "lt": args.end}}
-        )
+        range_time = Q("range", **{"br_build_date_time": {"gte": args.start, "lt": args.end}})
 
         combined_filters = match_job_name & range_time
 

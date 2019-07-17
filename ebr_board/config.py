@@ -25,8 +25,7 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
         """
         config_client = VaultAnyConfig(vault_config_filename)
         config_client.auth_from_file(vault_creds_filename)
-        config = config_client.load(
-            config_filename, process_secret_files=load_certs)
+        config = config_client.load(config_filename, process_secret_files=load_certs)
 
         # Elastic Search
         elastic_config = config["elastic"]
