@@ -19,8 +19,14 @@ with open("README.md") as readme_file:
 with open("CHANGELOG.md") as changelog_file:
     changelog = changelog_file.read()
 
-with open("requirements.txt") as req_file:
-    requirements = req_file.read().splitlines()
+requirements = [
+    "ebr-connector>=0.1.4,<0.2",
+    "Flask>=1.1.0,<2",
+    "flask-restplus>=0.12.1,<0.13",
+    "pendulum>=2.0.5,<3",
+    "vault-anyconfig>=0.2.2,<0.3",
+    "PyYAML>=5.1,<6",
+]
 
 setup_requirements = ["pytest-runner"]
 

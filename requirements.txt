@@ -1,7 +1,0 @@
-ebr-connector==0.1.4
-elasticsearch-dsl==6.3.1
-Flask==1.1.0
-flask-restplus==0.12.1
-pendulum==2.0.5
-vault-anyconfig==0.2.2
-PyYAML==5.1
