@@ -1,8 +1,7 @@
 # ebr-board
 
-[![Azure DevOps builds](https://img.shields.io/azure-devops/build/tomtomweb/GitHub-TomTom-International/5/master.svg)](https://dev.azure.com/tomtomweb/GitHub-TomTom-International/_build/latest?definitionId=39&branchName=master)
-[![Azure DevOps tests](https://img.shields.io/azure-devops/tests/tomtomweb/GitHub-TomTom-International/5/master.svg)](https://dev.azure.com/tomtomweb/GitHub-TomTom-International/_build/latest?definitionId=39&branchName=master)
-[![Azure DevOps coverage](https://img.shields.io/azure-devops/coverage/tomtomweb/GitHub-TomTom-International/5/master.svg)](https://dev.azure.com/tomtomweb/GitHub-TomTom-International/_build/latest?definitionId=39&branchName=master)
+[![Build Status](https://dev.azure.com/tomtomweb/GitHub-TomTom-International/_apis/build/status/tomtom-international.ebr-board?branchName=master)](https://dev.azure.com/tomtomweb/GitHub-TomTom-International/_build/latest?definitionId=39&branchName=master)
+
 
 [![PyPI - Version](https://img.shields.io/pypi/v/ebr-board.svg)](https://pypi.org/project/ebr-board/)
 [![PyPI - License](https://img.shields.io/pypi/l/ebr-board.svg)](https://pypi.org/project/ebr-board/)
