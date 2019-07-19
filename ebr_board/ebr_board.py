@@ -75,12 +75,3 @@ def configure_api():
     ebr_board_api.add_namespace(models_namespace)
 
     ebr_board_api.init_app(api_bp)
-
-
-if __name__ == "__main__":
-    create_app(
-        config_filename="config.yaml",
-        vault_config_filename="vault.yaml",
-        vault_creds_filename="vault.yaml",
-        load_certs=True,
-    ).run(debug=True)
