@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Main module for the app. Can either use the create_app or invoke through commandline to start the application.
+Main module for the app. Can either use the create_app or invoke through command line to start the application.
 """
 from flask import Flask
 from flask_restplus import Api

@@ -1,5 +1,5 @@
 """
-Tests API definiton
+Tests API definition
 """
 from flask_restplus import reqparse, Resource, Namespace
 from flask import current_app as app
@@ -17,10 +17,7 @@ ns = Namespace(  # pylint: disable=invalid-name
 @ns.route("/")
 @ns.param("job_name", "The name of the job this build belongs to.")
 @ns.param("build_id", "The id of the specific build being retrieved.")
-@ns.param(
-    "test_status",
-    "The status of the test, passed, failed or skipped. Leave blank for all.",
-)
+@ns.param("test_status", "The status of the test, passed, failed or skipped. Leave blank for all.")
 class Tests(Resource):
     """
     Operations for Test objects
@@ -63,10 +60,7 @@ class Tests(Resource):
         )
         if not result:
             return ns.abort(
-                404,
-                "Tests for Build #{build} for job {job} not found.".format(
-                    build=build_id, job=job_name
-                ),
+                404, "Tests for Build #{build} for job {job} not found.".format(build=build_id, job=job_name)
             )
 
         return result[0]
