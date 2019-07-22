@@ -45,7 +45,7 @@ class AggregatedTests(Resource):
         )
         args = parser.parse_args()
 
-        #  Use job_name if it is possed in, since this comes from api/job/<job_name>/tests/failing
+        #  Use job_name if it is passed in, since this comes from api/job/<job_name>/tests/failing
         if job_name is None:
             job_name = args.get("job_name", None)
 
