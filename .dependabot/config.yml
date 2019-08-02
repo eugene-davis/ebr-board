@@ -1,10 +1,16 @@
 version: 1
-
 update_configs:
   - package_manager: "python"
     directory: "ebr_board"
     update_schedule: "live"
-    
-  - commit_message:
-    prefix: "chore"
-    include_scope: true
+    commit_message:
+      prefix: "fix"
+      prefix_development: "chore"
+      include_scope: true
+    default_reviewers:
+      - "eugene-davis"
+      - "bestdeveloperever"
+    automerged_updates:
+      - match:
+          dependency_type: "all"
+          update_type: "security:patch"
