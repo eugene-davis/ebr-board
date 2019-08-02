@@ -10,7 +10,3 @@ update_configs:
     default_reviewers:
       - "eugene-davis"
       - "bestdeveloperever"
-    automerged_updates:
-      - match:
-          dependency_type: "all"
-          update_type: "security:patch"
