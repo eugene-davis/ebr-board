@@ -28,6 +28,8 @@ requirements = [
     "PyYAML>=5.1,<6",
 ]
 
+extra_requirements = {"aws_lambda": ["awsgi>=0.0.5"]}
+
 setup_requirements = ["pytest-runner"]
 
 test_requirements = ["pytest", "pytest-cov", "coverage"]

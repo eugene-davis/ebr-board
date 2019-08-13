@@ -77,6 +77,13 @@ def configure_api():
     ebr_board_api.init_app(api_bp)
 
 
+def lambda_handler(event, context):
+    import awsgi
+
+    app = create_app()
+    return awsgi.response(app, event, context)
+
+
 if __name__ == "__main__":
     create_app(
         config_filename="config.yaml",
