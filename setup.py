@@ -28,7 +28,7 @@ requirements = [
     "PyYAML>=5.1,<6",
 ]
 
-extra_requirements = {"aws_lambda": ["awsgi>=0.0.5"]}
+extra_requirements = {"aws_lambda": ["awsgi>=0.0.5", "ssm-parameter-store>=19.5.0,<20.0.0"]}
 
 setup_requirements = ["pytest-runner"]
 

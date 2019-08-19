@@ -4,6 +4,7 @@ Simple config.py file that loads the VaultAnyConfig package to get configuration
 # pylint: disable=invalid-name
 
 import urllib
+import os.path
 from copy import deepcopy
 
 from elasticsearch_dsl import connections
@@ -15,17 +16,20 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
     Config object which can connect to a Hashicorp Vault instance
     """
 
-    def __init__(self, config_filename, vault_config_filename, vault_creds_filename, load_certs=False):
+    def __init__(self, config, vault_config, vault_creds, load_certs=False):
         """
         Args:
-            config_filename {str} -- [description] (default: {'config.yaml'})
-            vault_config_filename {str} -- [description] (default: {'vault.yaml'})
-            vault_creds_filename {str} -- [description] (default: {'vault.yaml'})
+            config{str} -- [File path to configuration or a string containing the configuration] (default: {'config.yaml'})
+            vault_config {str} -- [File path to configuration or a string containing the configuration] (default: {'vault.yaml'})
+            vault_creds {str} -- [File path to configuration or a string containing the configuration](default: {'vault.yaml'})
             load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
         """
-        config_client = VaultAnyConfig(vault_config_filename)
-        config_client.auth_from_file(vault_creds_filename)
-        config = config_client.load(config_filename, process_secret_files=load_certs)
+        config_client = VaultAnyConfig(vault_config)
+        config_client.auth_from_file(vault_creds)
+        if os.path.isfile(config):
+            config = config_client.load(config, process_secret_files=load_certs)
+        else:
+            config = config_client.loads(config, process_secret_files=load_certs)
 
         # Elastic Search
         elastic_config = config["elastic"]

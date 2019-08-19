@@ -20,21 +20,17 @@ from __init__ import __version__, __project__
 
 
 def create_app(  # pylint: disable=too-many-arguments
-    config_filename="config.yaml",
-    vault_config_filename="vault.yaml",
-    vault_creds_filename="vault.yaml",
-    load_certs=False,
-    reverse_proxy=True,
+    config="config.yaml", vault_config="vault.yaml", vault_creds="vault.yaml", load_certs=False, reverse_proxy=True
 ):
     """
     Args:
-        config_filename {str} -- [description] (default: {'config.yaml'})
-        vault_config_filename {str} -- [description] (default: {'vault.yaml'})
-        vault_creds_filename {str} -- [description] (default: {'vault.yaml'})
+        config{str} -- [File path to configuration or a string containing the configuration] (default: {'config.yaml'})
+        vault_config {str} -- [File path to configuration or a string containing the configuration] (default: {'vault.yaml'})
+        vault_creds {str} -- [File path to configuration or a string containing the configuration](default: {'vault.yaml'})
         load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
     """
 
-    config = VaultConfig(config_filename, vault_config_filename, vault_creds_filename, load_certs)
+    config = VaultConfig(config, vault_config, vault_creds, load_certs)
 
     app = Flask(__name__)  # pylint: disable=invalid-name
     app.config.from_object(config)
@@ -79,15 +75,23 @@ def configure_api():
 
 def lambda_handler(event, context):
     import awsgi
+    import os
+    from ssm_parameter_store import EC2ParameterStore
 
-    app = create_app()
+    config_name = os.environ.get("config_name", "ebr_board_config")
+    vault_config_name = os.environ.get("vault_config_name", "ebr_board_vault_config")
+    vault_creds_name = os.environ.get("vault_creds_name", "ebr_board_vault_creds")
+
+    store = EC2ParameterStore()
+    config = store.get_parameters([config_name, vault_config_name, vault_creds_name], decrypt=True)
+
+    app = create_app(
+        config=config[config_name], vault_config=config[vault_config_name], vault_creds=config[vault_creds_name]
+    )
     return awsgi.response(app, event, context)
 
 
 if __name__ == "__main__":
-    create_app(
-        config_filename="config.yaml",
-        vault_config_filename="vault.yaml",
-        vault_creds_filename="vault.yaml",
-        load_certs=True,
-    ).run(debug=True)
+    create_app(config="config.yaml", vault_config="vault.yaml", vault_creds="vault.yaml", load_certs=True).run(
+        debug=True
+    )
