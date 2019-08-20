@@ -88,12 +88,16 @@ def lambda_handler(event, context):
     config_name = os.environ.get("config_name", "ebr_board_config")
     vault_config_name = os.environ.get("vault_config_name", "ebr_board_vault_config")
     vault_creds_name = os.environ.get("vault_creds_name", "ebr_board_vault_creds")
+    config_format = os.environ.get("config_format", "yaml")
 
     store = EC2ParameterStore()
     config = store.get_parameters([config_name, vault_config_name, vault_creds_name], decrypt=True)
 
     app = create_app(
-        config=config[config_name], vault_config=config[vault_config_name], vault_creds=config[vault_creds_name]
+        config=config[config_name],
+        vault_config=config[vault_config_name],
+        vault_creds=config[vault_creds_name],
+        config_format=config_format,
     )
     return awsgi.response(app, event, context)
 
