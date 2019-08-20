@@ -24,11 +24,11 @@ requirements = [
     "Flask>=1.1.0,<2",
     "flask-restplus>=0.12.1,<0.13",
     "pendulum>=2.0.5,<3",
-    "vault-anyconfig>=0.3.0,<0.4",
+    "vault-anyconfig>=0.3.1,<0.4",
     "PyYAML>=5.1,<6",
 ]
 
-extra_requirements = {"aws_lambda": ["awsgi>=0.0.5", "ssm-parameter-store>=19.5.0,<20.0.0"]}
+extra_requirements = {"aws_lambda": ["aws-wsgi>=0.2.0", "ssm-parameter-store>=19.5.0,<20.0.0"]}
 
 setup_requirements = ["pytest-runner"]
 
