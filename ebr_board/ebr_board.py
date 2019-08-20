@@ -3,13 +3,12 @@
 """
 Main module for the app. Can either use the create_app or invoke through command line to start the application.
 """
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_restplus import Api
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import VaultConfig
 
-from api.api import bp as api_bp
 from api.job.job import ns as job_namespace
 from api.job.build.build import ns as job_build_namespace
 from api.job.build.test.tests import ns as job_build_test_namespace
@@ -42,10 +41,11 @@ def create_app(  # pylint: disable=too-many-arguments
     app = Flask(__name__)  # pylint: disable=invalid-name
     app.config.from_object(config)
 
-    configure_api()
+    api_bp = Blueprint("api", __name__, url_prefix="/api")
+    configure_api(api_bp)
 
     with app.app_context():
-        register_blueprints(app)
+        register_blueprints(app, api_bp)
 
     if reverse_proxy:
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)
@@ -53,7 +53,7 @@ def create_app(  # pylint: disable=too-many-arguments
     return app
 
 
-def register_blueprints(app):
+def register_blueprints(app, api_bp):
     """
     Args:
         app {[type]} -- [description]
@@ -61,7 +61,7 @@ def register_blueprints(app):
     app.register_blueprint(api_bp)
 
 
-def configure_api():
+def configure_api(api_bp):
     """
     Handles the configuration of the API
     """
