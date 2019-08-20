@@ -5,4 +5,4 @@
 __project__ = "ebr-board"
 __author__ = "Eugene Davis"
 __email__ = "eugene.davis@tomtom.com"
-__version__ = "0.0.4-dev"
+__version__ = "0.1.0-dev"
