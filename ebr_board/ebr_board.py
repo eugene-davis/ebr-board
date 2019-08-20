@@ -20,7 +20,12 @@ from __init__ import __version__, __project__
 
 
 def create_app(  # pylint: disable=too-many-arguments
-    config="config.yaml", vault_config="vault.yaml", vault_creds="vault.yaml", load_certs=False, reverse_proxy=True
+    config="config.yaml",
+    vault_config="vault.yaml",
+    vault_creds="vault.yaml",
+    config_format=None,
+    load_certs=False,
+    reverse_proxy=True,
 ):
     """
     Args:
@@ -28,9 +33,11 @@ def create_app(  # pylint: disable=too-many-arguments
         vault_config {str} -- [File path to configuration or a string containing the configuration] (default: {'vault.yaml'})
         vault_creds {str} -- [File path to configuration or a string containing the configuration](default: {'vault.yaml'})
         load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
+        config_format {str} -- Specifies the parser to use when reading the configuration, only needed if reading a string. See the ac_parser option 
+            in python-anyconfig for available formats. Common ones are `json` and `yaml`.
     """
 
-    config = VaultConfig(config, vault_config, vault_creds, load_certs)
+    config = VaultConfig(config, vault_config, vault_creds, config_format=config_format, load_certs=load_certs)
 
     app = Flask(__name__)  # pylint: disable=invalid-name
     app.config.from_object(config)

@@ -16,20 +16,22 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
     Config object which can connect to a Hashicorp Vault instance
     """
 
-    def __init__(self, config, vault_config, vault_creds, load_certs=False):
+    def __init__(self, config, vault_config, vault_creds, config_format=None, load_certs=False):
         """
         Args:
             config{str} -- [File path to configuration or a string containing the configuration] (default: {'config.yaml'})
             vault_config {str} -- [File path to configuration or a string containing the configuration] (default: {'vault.yaml'})
             vault_creds {str} -- [File path to configuration or a string containing the configuration](default: {'vault.yaml'})
             load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
+            config_format {str} -- Specifies the parser to use when reading the configuration, only needed if reading a string. See the ac_parser option 
+            in python-anyconfig for available formats. Common ones are `json` and `yaml`.
         """
-        config_client = VaultAnyConfig(vault_config)
-        config_client.auth_from_file(vault_creds)
+        config_client = VaultAnyConfig(vault_config, ac_parser=config_format)
+        config_client.auto_auth(vault_creds, ac_parser=config_format)
         if os.path.isfile(config):
             config = config_client.load(config, process_secret_files=load_certs)
         else:
-            config = config_client.loads(config, process_secret_files=load_certs)
+            config = config_client.loads(config, process_secret_files=load_certs, ac_parser=config_format)
 
         # Elastic Search
         elastic_config = config["elastic"]
