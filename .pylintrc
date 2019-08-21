@@ -199,7 +199,7 @@ max-spelling-suggestions=4
 spelling-dict=en_US
 
 # List of comma separated words that should not be checked.
-spelling-ignore-words=args, elasticsearch, bool, yaml, Hashicorp, str, config, ebr, py, dicts, api
+spelling-ignore-words=args, elasticsearch, bool, yaml, Hashicorp, str, config, ebr, py, dicts, api, json, aws, anyconfig, ssm
 
 # A path to a file that contains private dictionary; one word per line.
 spelling-private-dict-file=
@@ -478,7 +478,7 @@ valid-metaclass-classmethod-first-arg=mcs
 [DESIGN]
 
 # Maximum number of arguments for function / method
-max-args=5
+max-args=8
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes=7
@@ -490,7 +490,7 @@ max-bool-expr=5
 max-branches=12
 
 # Maximum number of locals for function / method body
-max-locals=15
+max-locals=20
 
 # Maximum number of parents for a class (see R0901).
 max-parents=7

@@ -32,7 +32,7 @@ def create_app(  # pylint: disable=too-many-arguments
         vault_config {str} -- [File path to configuration or a string containing the configuration] (default: {'vault.yaml'})
         vault_creds {str} -- [File path to configuration or a string containing the configuration](default: {'vault.yaml'})
         load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
-        config_format {str} -- Specifies the parser to use when reading the configuration, only needed if reading a string. See the ac_parser option 
+        config_format {str} -- Specifies the parser to use when reading the configuration, only needed if reading a string. See the ac_parser option
             in python-anyconfig for available formats. Common ones are `json` and `yaml`.
     """
 
@@ -81,6 +81,9 @@ def configure_api(api_bp):
 
 
 def lambda_handler(event, context):
+    """
+    Set this as the target for AWS Lambda
+    """
     import awsgi
     import os
     from ssm_parameter_store import EC2ParameterStore
