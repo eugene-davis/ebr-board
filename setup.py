@@ -30,7 +30,12 @@ requirements = [
 
 extra_requirements = {"aws_lambda": ["aws-wsgi>=0.2.0", "ssm-parameter-store>=19.5.0,<20.0.0"]}
 
-setup_requirements = ["pytest-runner"]
+# Ensure that linting and testing will be done with all depedencies installed
+collected_extras = []
+for req_set_name, req_set in extra_requirements.items():
+    collected_extras += req_set
+
+setup_requirements = ["pytest-runner"] + collected_extras
 
 test_requirements = ["pytest", "pytest-cov", "coverage"]
 
