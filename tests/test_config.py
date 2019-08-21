@@ -5,10 +5,9 @@ from copy import deepcopy
 from ebr_board.config import VaultConfig
 
 
-@patch("ebr_board.config.VaultAnyConfig.isfile")
 @patch("ebr_board.config.connections.create_connection")
 @patch("ebr_board.config.VaultAnyConfig")
-def test_config(mock_va, mock_connections, mock_isfile):
+def test_config(mock_va, mock_connections):
     """
     Tests that the instantiation of a config.VaultConfig object results in the correct configuration.
     """
