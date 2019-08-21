@@ -20,8 +20,8 @@ def test_config(mock_va, mock_connections):
     config = VaultConfig("config.yaml", "vault.yaml", "vault_creds.yaml")
 
     # Validate calls to VaultAnyConfig instance
-    mock_va.assert_called_once_with("vault.yaml")
-    mock_va.return_value.auto_auth.assert_called_once_with("vault_creds.yaml")
+    mock_va.assert_called_once_with("vault.yaml", ac_parser=None)
+    mock_va.return_value.auto_auth.assert_called_once_with("vault_creds.yaml", ac_parser=None)
     mock_va.return_value.load.assert_called_once_with("config.yaml", process_secret_files=False)
 
     # Validate elastic configuration
