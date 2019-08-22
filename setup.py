@@ -24,11 +24,18 @@ requirements = [
     "Flask>=1.1.0,<2",
     "flask-restplus>=0.12.1,<0.13",
     "pendulum>=2.0.5,<3",
-    "vault-anyconfig>=0.2.2,<0.3",
+    "vault-anyconfig>=0.3.1,<0.4",
     "PyYAML>=5.1,<6",
 ]
 
-setup_requirements = ["pytest-runner"]
+extra_requirements = {"aws_lambda": ["aws-wsgi>=0.2.0", "ssm-parameter-store>=19.5.0,<20.0.0"]}
+
+# Ensure that linting and testing will be done with all depedencies installed
+collected_extras = []
+for req_set in extra_requirements.values():
+    collected_extras += req_set
+
+setup_requirements = ["pytest-runner"] + collected_extras
 
 test_requirements = ["pytest", "pytest-cov", "coverage"]
 

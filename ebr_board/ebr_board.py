@@ -3,13 +3,12 @@
 """
 Main module for the app. Can either use the create_app or invoke through command line to start the application.
 """
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_restplus import Api
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from config import VaultConfig
 
-from api.api import bp as api_bp
 from api.job.job import ns as job_namespace
 from api.job.build.build import ns as job_build_namespace
 from api.job.build.test.tests import ns as job_build_test_namespace
@@ -20,29 +19,33 @@ from __init__ import __version__, __project__
 
 
 def create_app(  # pylint: disable=too-many-arguments
-    config_filename="config.yaml",
-    vault_config_filename="vault.yaml",
-    vault_creds_filename="vault.yaml",
+    config="config.yaml",
+    vault_config="vault.yaml",
+    vault_creds="vault.yaml",
+    config_format=None,
     load_certs=False,
     reverse_proxy=True,
 ):
     """
     Args:
-        config_filename {str} -- [description] (default: {'config.yaml'})
-        vault_config_filename {str} -- [description] (default: {'vault.yaml'})
-        vault_creds_filename {str} -- [description] (default: {'vault.yaml'})
+        config{str} -- [File path to configuration or a string containing the configuration] (default: {'config.yaml'})
+        vault_config {str} -- [File path to configuration or a string containing the configuration] (default: {'vault.yaml'})
+        vault_creds {str} -- [File path to configuration or a string containing the configuration](default: {'vault.yaml'})
         load_certs {bool} -- Automatically load certificate and key files during configuration (default: {False})
+        config_format {str} -- Specifies the parser to use when reading the configuration, only needed if reading a string. See the ac_parser option
+            in python-anyconfig for available formats. Common ones are `json` and `yaml`.
     """
 
-    config = VaultConfig(config_filename, vault_config_filename, vault_creds_filename, load_certs)
+    config = VaultConfig(config, vault_config, vault_creds, config_format=config_format, load_certs=load_certs)
 
     app = Flask(__name__)  # pylint: disable=invalid-name
     app.config.from_object(config)
 
-    configure_api()
+    api_bp = Blueprint("api", __name__, url_prefix="/api")
+    configure_api(api_bp)
 
     with app.app_context():
-        register_blueprints(app)
+        register_blueprints(app, api_bp)
 
     if reverse_proxy:
         app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1)
@@ -50,7 +53,7 @@ def create_app(  # pylint: disable=too-many-arguments
     return app
 
 
-def register_blueprints(app):
+def register_blueprints(app, api_bp):
     """
     Args:
         app {[type]} -- [description]
@@ -58,7 +61,7 @@ def register_blueprints(app):
     app.register_blueprint(api_bp)
 
 
-def configure_api():
+def configure_api(api_bp):
     """
     Handles the configuration of the API
     """
@@ -78,9 +81,6 @@ def configure_api():
 
 
 if __name__ == "__main__":
-    create_app(
-        config_filename="config.yaml",
-        vault_config_filename="vault.yaml",
-        vault_creds_filename="vault.yaml",
-        load_certs=True,
-    ).run(debug=True)
+    create_app(config="config.yaml", vault_config="vault.yaml", vault_creds="vault.yaml", load_certs=True).run(
+        debug=True
+    )
