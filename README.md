@@ -51,12 +51,23 @@ To start in dev mode, run ` python ebr_board/ebr_board.py`
 Can be invoked with `ebr_board:create_app(config_filename='/etc/ebr-board/config.yaml', vault_config_filename='/etc/ebr-board/vault.yaml', vault_creds_filename='/etc/ebr-board/vault.yaml', load_certs=True, reverse_proxy=True)`, for example from Gunicorn. You should configure it behind a reverse proxy - for more details see
 any guide on configuring Flask servers for deployment. A Dockerfile pre-configuring Gunicorn is available in the root of the repository.
 
+### AWS Lambda Support
+
+The application can be run in AWS Lambda by using the `handler` function in the `aws_lambda` module.
+It expects that the configuration (the main configuration, vault configuration and vault creds) will be stored entirely as strings in the parameter
+store. The way it processes these parameters can be configured with environmental variables:
+* `config_name`: defaults to `ebr_board_config`
+* `vault_config_name`: defaults to `ebr_board_vault_config`
+* `vault_creds_name`: defaults to `ebr_board_vault_creds`
+* `config_format`: defaults to `yaml`
+
 ## Features
 
 * Provides abstraction to fetch:
     * a list of builds from a given job
     * tests from a given job
     * aggregations of tests failures
+* AWS Lambda support
 
 ### Todo:
 
