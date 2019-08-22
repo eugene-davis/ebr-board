@@ -46,7 +46,6 @@ def test_config_ca_cert_as_string(mock_va, mock_connections, mock_ssl):
     del elastic_config["user"]
     del elastic_config["pwd"]
     del elastic_config["ca_certs"]
-    mock_connections.assert_called()
     assert config.ES_INDEX == elastic_config["index"]
 
 
@@ -120,5 +119,4 @@ def test_config_ca_cert_as_file(mock_va, mock_connections, mock_isfile):
     elastic_config.update({"http_auth": auth_string})
     del elastic_config["user"]
     del elastic_config["pwd"]
-    mock_connections.assert_called()
     assert config.ES_INDEX == elastic_config["index"]
