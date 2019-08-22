@@ -51,7 +51,7 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
         password = urllib.parse.quote_plus(local_src_config["pwd"])
 
         # If the ca_certs is a string value rather than a file path, we should setup  an SSL Context that loads this certificate.
-        if not os.path.isfile(local_src_config.get("ca_certs", "")):
+        if not os.path.isfile(local_src_config.get("ca_certs", "")) and local_src_config.get("ca_certs", False):
             ssl_context = ssl.create_default_context()
             ssl_context.load_verify_locations(cadata=local_src_config["ca_certs"])
             local_src_config.update({"ssl_context": ssl_context})
