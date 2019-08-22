@@ -93,17 +93,10 @@ def lambda_handler(event, context):
     vault_creds_name = os.environ.get("vault_creds_name", "ebr_board_vault_creds")
     config_format = os.environ.get("config_format", "yaml")
 
-    elastic_cert_name = os.environ.get("elastic_cert_name", None)
     vault_cert_name = os.environ.get("vault_cert_name", None)
 
     store = EC2ParameterStore()
     config = store.get_parameters([config_name, vault_config_name, vault_creds_name], decrypt=True)
-
-    # Get certs that are stored in the ssm parameter store rather than Vault
-    if elastic_cert_name:
-        elastic_cert = store.get_parameter(elastic_cert_name)[elastic_cert_name]
-        with open("/tmp/elastic.crt", "w") as elastic_cert_file:
-            elastic_cert_file.write(elastic_cert)
 
     if vault_cert_name:
         vault_cert = store.get_parameter(vault_cert_name)[vault_cert_name]
