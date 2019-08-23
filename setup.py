@@ -28,11 +28,11 @@ requirements = [
     "PyYAML>=5.1,<6",
 ]
 
-extra_requirements = {"aws_lambda": ["aws-wsgi>=0.2.0", "ssm-parameter-store>=19.5.0,<20.0.0"]}
+extras_require = {"aws_lambda": ["aws-wsgi>=0.2.0", "ssm-parameter-store>=19.5.0,<20.0.0"]}
 
 # Ensure that linting and testing will be done with all depedencies installed
 collected_extras = []
-for req_set in extra_requirements.values():
+for req_set in extras_require.values():
     collected_extras += req_set
 
 setup_requirements = ["pytest-runner"] + collected_extras
@@ -64,6 +64,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite="tests",
     tests_require=test_requirements,
+    extras_require=extras_require,
     url="https://github.com/tomtom-international/ebr-board",
     version=ebr_board.__version__,
     zip_safe=False,
