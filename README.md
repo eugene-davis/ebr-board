@@ -53,7 +53,8 @@ any guide on configuring Flask servers for deployment. A Dockerfile pre-configur
 
 ### AWS Lambda Support
 
-The application can be run in AWS Lambda by using the `handler` function in the `aws_lambda` module.
+The application can be run in AWS Lambda by using the `handler` function in the `aws_lambda` module. In this case it should be installed with the
+`aws_lambda` optional dependencies, i.e. `pip install ebr-board['aws_lambda']`.
 It expects that the configuration (the main configuration, vault configuration and vault creds) will be stored entirely as strings in the parameter
 store. The way it processes these parameters can be configured with environmental variables:
 * `config_name`: defaults to `ebr_board_config`
