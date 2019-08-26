@@ -8,8 +8,8 @@ from elasticsearch_dsl import Q, A
 
 from ebr_connector.schema.build_results import BuildResults
 
-from models import tests_agg_model
-from database.queries import make_query
+from ebr_board.models import tests_agg_model
+from ebr_board.database.queries import make_query
 
 
 ns = Namespace("tests/", descriptions="Test aggregations.")  # pylint: disable=invalid-name

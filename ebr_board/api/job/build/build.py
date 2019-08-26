@@ -5,12 +5,10 @@ from flask_restplus import Resource, Namespace
 from flask import current_app as app
 from elasticsearch_dsl import Q
 
-from models import build_model
-from database.queries import make_query, detailed_build_info
+from ebr_board.models import build_model
+from ebr_board.database.queries import make_query, detailed_build_info
 
-ns = Namespace(  # pylint: disable=invalid-name
-    "job/<path:job_name>/build", descriptions="Build results"
-)
+ns = Namespace("job/<path:job_name>/build", descriptions="Build results")  # pylint: disable=invalid-name
 
 
 @ns.route("/<build_id>/")
@@ -37,10 +35,5 @@ class Build(Resource):
             excludes=detailed_build_info["excludes"],
         )
         if not result:
-            return ns.abort(
-                404,
-                "Build #{build} for job {job} not found.".format(
-                    build=build_id, job=job_name
-                ),
-            )
+            return ns.abort(404, "Build #{build} for job {job} not found.".format(build=build_id, job=job_name))
         return result[0].__getstate__()[0]

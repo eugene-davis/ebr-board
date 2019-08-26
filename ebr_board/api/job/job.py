@@ -7,10 +7,10 @@ from flask_restplus import Resource, reqparse, Namespace
 from flask import current_app as app
 from elasticsearch_dsl import Q
 
-from database.queries import make_query, detailed_build_info
-from models import job_model
+from ebr_board.database.queries import make_query, detailed_build_info
+from ebr_board.models import job_model
 
-from ..tests import AggregatedTests
+from ebr_board.api.tests import AggregatedTests
 
 ns = Namespace("job/", descriptions="Build Job")  # pylint: disable=invalid-name
 

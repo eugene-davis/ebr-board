@@ -7,8 +7,7 @@ import os
 import awsgi
 from ssm_parameter_store import EC2ParameterStore
 
-# This definitely exists, but something about `python setup.py lint`'s execution can't find it
-from ebr_board import create_app  # pylint: disable=no-name-in-module
+from ebr_board.app import create_app  # pylint: disable=no-name-in-module
 
 
 def handler(event, context):
