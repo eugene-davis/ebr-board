@@ -7,15 +7,15 @@ from flask import Flask, Blueprint
 from flask_restplus import Api
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from config import VaultConfig
+from ebr_board.config import VaultConfig
 
-from api.job.job import ns as job_namespace
-from api.job.build.build import ns as job_build_namespace
-from api.job.build.test.tests import ns as job_build_test_namespace
-from api.tests import ns as tests_namespace
-from models import ns as models_namespace
+from ebr_board.api.job.job import ns as job_namespace
+from ebr_board.api.job.build.build import ns as job_build_namespace
+from ebr_board.api.job.build.test.tests import ns as job_build_test_namespace
+from ebr_board.api.tests import ns as tests_namespace
+from ebr_board.models import ns as models_namespace
 
-from __init__ import __version__, __project__
+from ebr_board.__init__ import __version__, __project__
 
 
 def create_app(  # pylint: disable=too-many-arguments

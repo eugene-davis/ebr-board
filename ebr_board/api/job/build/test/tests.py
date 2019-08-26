@@ -5,8 +5,8 @@ from flask_restplus import reqparse, Resource, Namespace
 from flask import current_app as app
 from elasticsearch_dsl import Q
 
-from models import tests_model
-from database.queries import make_query
+from ebr_board.models import tests_model
+from ebr_board.database.queries import make_query
 
 
 ns = Namespace(  # pylint: disable=invalid-name
