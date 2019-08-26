@@ -1,7 +1,8 @@
 # Changelog
 
 ## 0.2.0 (2019-08-26)
-  * Removed support for Python 3.5
+
+* Removed support for Python 3.5
 
 ## 0.1.1 (2019-08-23)
 
