@@ -41,6 +41,16 @@ elastic:
 
 ```
 
+To change the default url prefix (`/api`) add a new key-value at the top level:
+```yaml
+url_prefix: "/new_prefix"
+```
+
+To have *no* prefix, provide an empty string, i.e.
+```yaml
+url_prefix: ""`
+```
+
 
 ### Dev Mode
 

@@ -41,7 +41,7 @@ def create_app(  # pylint: disable=too-many-arguments
     app = Flask(__name__)  # pylint: disable=invalid-name
     app.config.from_object(config)
 
-    api_bp = Blueprint("api", __name__, url_prefix="/api")
+    api_bp = Blueprint("api", __name__, url_prefix=config.get("url_prefix", "/api"))
     configure_api(api_bp)
 
     with app.app_context():

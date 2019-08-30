@@ -30,12 +30,12 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
         config_client = VaultAnyConfig(vault_config, ac_parser=config_format)
         config_client.auto_auth(vault_creds, ac_parser=config_format)
         if os.path.isfile(config):
-            config = config_client.load(config, process_secret_files=load_certs)
+            self.config = config_client.load(config, process_secret_files=load_certs)
         else:
-            config = config_client.loads(config, process_secret_files=load_certs, ac_parser=config_format)
+            self.config = config_client.loads(config, process_secret_files=load_certs, ac_parser=config_format)
 
         # Elastic Search
-        elastic_config = config["elastic"]
+        elastic_config = self.config["elastic"]
         self.connect_elastic(elastic_config)
         self.ES_INDEX = elastic_config["index"]
 
@@ -62,3 +62,13 @@ class VaultConfig:  # pylint: disable=too-many-instance-attributes,too-few-publi
 
         local_src_config.update({"http_auth": user + ":" + password})
         connections.create_connection(hosts=[local_src_config])
+
+    def get(self, key, default=None):
+        """
+        Passes through to the config dictionary
+        Args:
+            key: key to retrieve from config
+            default: (optional) default value
+        """
+
+        return self.config.get(key, default)
